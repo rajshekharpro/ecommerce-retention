@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+*.pyc
+.DS_Store
+CONTRACT.md
+*.log
+# The packaged .twbx uses portable relative paths; this local working copy does not.
+tableau/Retention_Analytics.twb

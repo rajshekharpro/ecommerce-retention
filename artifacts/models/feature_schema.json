@@ -1,0 +1,33 @@
+{
+  "numeric": [
+    "tenure_days",
+    "recency_days",
+    "orders_30d",
+    "orders_90d",
+    "orders_180d",
+    "revenue_90d",
+    "revenue_180d",
+    "lifetime_orders",
+    "lifetime_revenue",
+    "avg_order_value",
+    "avg_gap_days",
+    "gap_std_days",
+    "days_to_first_order",
+    "order_trend"
+  ],
+  "categorical": [
+    "acquisition_channel",
+    "country"
+  ],
+  "excluded": [
+    "customer_id",
+    "snapshot_date",
+    "signup_date",
+    "churned"
+  ],
+  "risk_thresholds": {
+    "high": 0.1344890474024387,
+    "medium": 0.06724452370121935,
+    "selection": "High maximizes validation F2; Medium starts at half the High threshold"
+  }
+}

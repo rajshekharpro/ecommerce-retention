@@ -1,0 +1,7 @@
+{
+  "feature_rows": 3503,
+  "feature_columns": 12,
+  "cohort_rows": 1035,
+  "sales_months": 45,
+  "sql_pandas_match": true
+}

@@ -1,0 +1,145 @@
+{
+  "selected_model": "hist_gradient_boosting",
+  "selection_metric": "Maximum validation average precision; log loss breaks ties",
+  "label_definition": "No completed order in the next 90 calendar days",
+  "eligible_population": "At least 90 days tenure and a completed purchase in the preceding 180 days",
+  "split_policy": {
+    "train_end": "2025-10-01",
+    "validation": "2026-01-01",
+    "test": "2026-04-01",
+    "outcome_days": 90,
+    "description": "Chronological customer panels; customers can recur across snapshots. No future outcome crosses a split boundary."
+  },
+  "split_counts": {
+    "train": 11877,
+    "validation": 2697,
+    "test": 3000
+  },
+  "candidates": {
+    "logistic_regression": {
+      "n": 2697,
+      "churn_rate": 0.25064886911383016,
+      "roc_auc": 0.8218396189126597,
+      "average_precision": 0.5979537209991875,
+      "brier": 0.14212501779547698,
+      "log_loss": 0.4399862943903846,
+      "threshold": 0.5,
+      "precision": 0.691131498470948,
+      "recall": 0.3343195266272189,
+      "f2": 0.37281425272187396,
+      "confusion_matrix": [
+        [
+          1920,
+          101
+        ],
+        [
+          450,
+          226
+        ]
+      ]
+    },
+    "hist_gradient_boosting": {
+      "n": 2697,
+      "churn_rate": 0.25064886911383016,
+      "roc_auc": 0.8138327150716296,
+      "average_precision": 0.6011799013127067,
+      "brier": 0.1437474035573144,
+      "log_loss": 0.4475344476641591,
+      "threshold": 0.5,
+      "precision": 0.6732394366197183,
+      "recall": 0.35355029585798814,
+      "f2": 0.39065053939195815,
+      "confusion_matrix": [
+        [
+          1905,
+          116
+        ],
+        [
+          437,
+          239
+        ]
+      ]
+    }
+  },
+  "validation": {
+    "n": 2697,
+    "churn_rate": 0.25064886911383016,
+    "roc_auc": 0.8138327150716296,
+    "average_precision": 0.6011799013127067,
+    "brier": 0.1437474035573144,
+    "log_loss": 0.4475344476641591,
+    "threshold": 0.1344890474024387,
+    "precision": 0.4332321699544765,
+    "recall": 0.8446745562130178,
+    "f2": 0.7098458478368971,
+    "confusion_matrix": [
+      [
+        1274,
+        747
+      ],
+      [
+        105,
+        571
+      ]
+    ]
+  },
+  "test": {
+    "n": 3000,
+    "churn_rate": 0.25166666666666665,
+    "roc_auc": 0.8239322113895485,
+    "average_precision": 0.5983671525509187,
+    "brier": 0.13922289634131355,
+    "log_loss": 0.4287133240963849,
+    "threshold": 0.1344890474024387,
+    "precision": 0.3875354107648725,
+    "recall": 0.9059602649006623,
+    "f2": 0.7147335423197492,
+    "confusion_matrix": [
+      [
+        1164,
+        1081
+      ],
+      [
+        71,
+        684
+      ]
+    ]
+  },
+  "baseline_test": {
+    "n": 3000,
+    "churn_rate": 0.25166666666666665,
+    "roc_auc": 0.5,
+    "average_precision": 0.25166666666666665,
+    "brier": 0.18893932818546796,
+    "log_loss": 0.5658516383886018,
+    "threshold": 0.1344890474024387,
+    "precision": 0.25166666666666665,
+    "recall": 1.0,
+    "f2": 0.6270764119601329,
+    "confusion_matrix": [
+      [
+        0,
+        2245
+      ],
+      [
+        0,
+        755
+      ]
+    ]
+  },
+  "top_decile_lift": 2.7682119205298013,
+  "risk_thresholds": {
+    "high": 0.1344890474024387,
+    "medium": 0.06724452370121935,
+    "selection": "High maximizes validation F2; Medium starts at half the High threshold"
+  },
+  "production_refit": {
+    "rows": 20772,
+    "last_snapshot": "2026-07-01",
+    "score_date": "2026-10-01",
+    "note": "Production refit uses all matured labels; test metrics describe the separate frozen evaluation model"
+  },
+  "revenue_definition": "Prior 180-day completed revenue / 2 \u00d7 churn probability; exposure proxy, not causal revenue loss",
+  "importance_definition": "Validation permutation decrease in average precision; 3 repeats, up to 4000 rows",
+  "synthetic_data": true
+}

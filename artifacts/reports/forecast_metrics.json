@@ -1,0 +1,104 @@
+{
+  "selected_model": "seasonal_naive_drift",
+  "selection_metric": "Pooled rolling-origin MAE over observed horizons 1 to 6",
+  "rolling_origin_cv": {
+    "initial_training_months": 24,
+    "max_horizon_months": 6,
+    "origins": 21,
+    "first_origin": "2024-12-01",
+    "last_origin": "2026-08-01",
+    "note": "Expanding history; future actuals are unavailable to each fit. Recent origins contribute only observed horizons. Model selection and reported errors share these folds; there is no independent forecast test set."
+  },
+  "candidates": {
+    "seasonal_naive": {
+      "mae": 134429.07909909906,
+      "rmse": 135924.3962839749,
+      "wape": 0.3510662506431743,
+      "n_predictions": 111
+    },
+    "seasonal_naive_drift": {
+      "mae": 15226.16482732733,
+      "rmse": 20511.990855000724,
+      "wape": 0.03976366299187573,
+      "n_predictions": 111
+    },
+    "ridge_seasonal_trend": {
+      "mae": 416111.3427450951,
+      "rmse": 457646.85516172386,
+      "wape": 1.0866893526803636,
+      "n_predictions": 111
+    }
+  },
+  "baseline": {
+    "mae": 134429.07909909906,
+    "rmse": 135924.3962839749,
+    "wape": 0.3510662506431743,
+    "n_predictions": 111
+  },
+  "selected": {
+    "mae": 15226.16482732733,
+    "rmse": 20511.990855000724,
+    "wape": 0.03976366299187573,
+    "n_predictions": 111
+  },
+  "horizon_metrics": {
+    "1": {
+      "mae": 15076.48289682541,
+      "rmse": 20346.63075868331,
+      "wape": 0.041039686462427526,
+      "n_predictions": 21,
+      "residual_q10": -23073.13833333348,
+      "residual_q90": 13456.095833333384
+    },
+    "2": {
+      "mae": 15094.453583333347,
+      "rmse": 20015.65014169259,
+      "wape": 0.04044777547707044,
+      "n_predictions": 20,
+      "residual_q10": -23080.471416666776,
+      "residual_q90": 14602.894750000076
+    },
+    "3": {
+      "mae": 14819.02767543861,
+      "rmse": 19748.05393187514,
+      "wape": 0.0389038041590975,
+      "n_predictions": 19,
+      "residual_q10": -21398.363666666693,
+      "residual_q90": 17342.720666666668
+    },
+    "4": {
+      "mae": 15168.5823611111,
+      "rmse": 20188.63928617396,
+      "wape": 0.039174752091508995,
+      "n_predictions": 18,
+      "residual_q10": -20745.624250000015,
+      "residual_q90": 19721.778000000035
+    },
+    "5": {
+      "mae": 15290.613725490193,
+      "rmse": 20998.442734818167,
+      "wape": 0.038738753436254755,
+      "n_predictions": 17,
+      "residual_q10": -20226.192166666664,
+      "residual_q90": 24056.635833333377
+    },
+    "6": {
+      "mae": 16067.040104166666,
+      "rmse": 22014.259962611115,
+      "wape": 0.040115520974796655,
+      "n_predictions": 16,
+      "residual_q10": -21110.64041666666,
+      "residual_q90": 24993.338333333348
+    }
+  },
+  "forecast_months": 6,
+  "forecast_revenue_total": 3295268.3049999997,
+  "intervals": {
+    "nominal_coverage": 0.8,
+    "method": "Per-horizon rolling residual 10th/90th percentiles, widened to contain point forecast and clipped at zero",
+    "limitation": "Approximate empirical ranges from limited, overlapping folds used for model selection; no guaranteed coverage or formal confidence level. Do not sum bounds into a total-revenue interval."
+  },
+  "observed_months": 45,
+  "last_observed_month": "2026-09-01",
+  "synthetic_data": true
+}

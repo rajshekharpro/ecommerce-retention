@@ -1,0 +1,18 @@
+{
+  "worksheets": 10,
+  "dashboards": 2,
+  "data_sources": 4,
+  "cross_reference_checks": "passed",
+  "tableau_minimum_version": "2026.1",
+  "csv_rows": {
+    "customer_scores.csv": 3503,
+    "sales_forecast.csv": 51,
+    "cohorts.csv": 1035,
+    "monthly_sales.csv": 45
+  },
+  "native_tableau_opened": false,
+  "native_validation_note": "Tableau Desktop/Reader is unavailable in this environment. Opening, querying, dashboard rendering and filter interactions have not been verified in Tableau.",
+  "xsd_validation": "passed (official Tableau 2026.1 XSD; local user/xml namespace shims)",
+  "package_checks": "passed: ZIP integrity, member set, relative paths and byte-identical source CSVs",
+  "package_sha256": "682d465686bd1f66f9fb07f62518664f5a3397b44ac23ed2c18fbda998d4b867"
+}

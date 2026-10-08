@@ -1,0 +1,27 @@
+# Churn modeling and decision rules
+
+This demonstration uses synthetic e-commerce transactions. Its metrics are measurements of the simulated data, not evidence of real-world business performance. Churn means **no completed purchase during the 90 days following a snapshot**. Eligibility requires at least 90 days since signup and at least one completed purchase in the preceding 180 days. Results describe this recently purchasing population; older inactive customers and new signups are outside the model population.
+
+## Temporal evaluation
+
+Quarterly customer snapshots through 2025-10-01 train the evaluation model. The 2026-01-01 snapshot selects one of two prespecified candidates: logistic regression or histogram gradient boosting. Selection maximizes validation average precision, with log loss as a tie breaker. No hyperparameter search uses test observations. The High risk threshold maximizes validation F2, which gives recall more weight than precision. Equal F2 scores favor the higher threshold. Medium begins at half that threshold; Low is below Medium. These are demonstration operating rules; a real deployment should select intervention thresholds from contact capacity, treatment effects, and costs.
+
+The 2026-04-01 snapshot is evaluated only after fixing the model and threshold. Each outcome is fully observed before the next split begins. The same customer can recur across time, reflecting prediction for an existing customer base. This is an out-of-time evaluation, not a test of generalization to entirely unseen customers. Repeated customer observations also mean rows are not independent.
+
+The frozen evaluation model fits preprocessing on training rows only. Numeric medians, missingness indicators, and scaling are learned inside a Scikit-learn pipeline. Acquisition channel and country use one-hot encoding that tolerates previously unseen categories. Identifiers, signup timestamps, snapshot dates, and target labels are excluded from predictors. Both models use ordinary probability objectives without class weighting. ROC AUC, average precision, Brier score, log loss, precision, recall, F2, confusion counts (`[[TN, FP], [FN, TP]]`), and top-decile lift accompany a constant training-prevalence baseline. Brier score and log loss assess probability quality; probabilities are not claimed to be calibrated to real-world customers.
+
+After evaluation, a **separate production model** refits the selected pipeline on all mature labeled snapshots, including 2026-07-01, and scores 2026-10-01. The original validation threshold is retained. The test metrics apply to the frozen evaluation model, not directly to this refitted model. Evaluate calibration and thresholds again when new prospective outcomes become available. The two models are saved separately as `evaluation_model.joblib` and `production_model.joblib`. Only load trusted joblib files.
+
+## Interpretation and retention experiments
+
+Feature importance is the decrease in validation average precision after shuffling each original input column, using three repeats and at most 4,000 validation rows. Correlated features can share or mask importance; negative estimates are preserved. Importance reflects association and is not a causal explanation. Customer-facing reason strings are explicit behavioral heuristics, not individual model attribution. A declining-frequency reason requires at least two purchases in the preceding 60-day window and fewer purchases in the latest 30 days than the preceding window's monthly average. The stabilized, nonnegative `order_trend` feature is not interpreted as a signed change.
+
+Segments combine risk with current tenure, recent purchasing, and the current population's 75th percentile of prior 180-day revenue. Suggested actions are proposed experiments, not proven treatments. For example, high-value customers with high churn risk can enter a randomized outreach experiment; inactive buyers can enter a win-back experiment with a holdout. Track incremental completed purchases, gross margin, unsubscribe rates, and contact cost before scaling an intervention. Avoid assuming that a higher churn score implies greater responsiveness to a discount.
+
+`expected_90d_revenue` is a historical pace proxy: prior 180-day completed revenue divided by two. `revenue_at_risk` multiplies that proxy by churn probability. It is exposure for prioritization, **not a causal estimate of lost or recoverable revenue**. Retention recommendations do not claim an achieved revenue improvement.
+
+## Reproduction and limitations
+
+The pipeline uses seed 42. Configuration and exact thresholds are in `artifacts/reports/metrics.json`; per-customer held-out predictions are in `artifacts/reports/validation_predictions.csv` and `test_predictions.csv`. Model feature columns and risk thresholds are in `artifacts/models/feature_schema.json`. Transaction generation, timestamps, feature windows, and label maturity must be audited together before adapting the project to actual data.
+
+Major limitations are simulated behavior, no acquisition-cost or margin data, no intervention outcomes, no guarantee of model calibration after refitting, and a churn definition suited to a demonstration rather than every retail category. Country and acquisition-channel inputs require review for suitability and fairness in any real deployment. Real data should also add seasonality-aware validation, campaign exposure, product replenishment cycles, and consent-aware contact policies.

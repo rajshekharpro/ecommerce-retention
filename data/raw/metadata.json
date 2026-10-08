@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "seed": 42,
+  "currency": "USD",
+  "observation_start": "2023-01-01",
+  "observation_end_exclusive": "2026-10-01",
+  "customers": 5000,
+  "orders": 121222,
+  "note": "Fictional behavior for demonstrating methods; no measured business impact."
+}

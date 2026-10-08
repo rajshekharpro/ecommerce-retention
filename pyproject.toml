@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecommerce-retention"
+version = "1.0.0"
+description = "Reproducible customer lifecycle analytics, churn modeling and retention planning"
+requires-python = ">=3.11"
+dependencies = ["numpy>=2.0,<3", "pandas>=2.2,<4", "scipy>=1.13,<2", "scikit-learn>=1.5,<2", "joblib>=1.4,<2"]
+
+[project.scripts]
+retention = "retention.pipeline:main"
+
+[tool.setuptools.packages.find]
+include = ["retention*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
