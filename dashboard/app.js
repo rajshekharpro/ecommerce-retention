@@ -25,7 +25,7 @@
   const metric = value => value === null || value === undefined || !Number.isFinite(Number(value)) ? 'N/A' : Number(value).toFixed(3);
   const customers = data.customers;
   const state = { channel: '', country: '', risk: '', segment: '', search: '', sort: 'churn_probability', direction: -1, page: 1, pageSize: 12, period: 12, cohortRange: 'recent', view: 'overview' };
-  const colors = { High: '#ce7651', Medium: '#d9ab58', Low: '#599789' };
+  const colors = { High: '#eb5b60', Medium: '#d8a33d', Low: '#00b386' };
   const views = {
     overview: ['OVERVIEW', 'Know who stays. Understand who may leave.', 'Turn customer behavior into a more focused retention strategy.'],
     customers: ['CUSTOMER SIGNALS', 'Every customer has a story.', 'Find the behavioral signals that deserve a closer look.'],
@@ -46,7 +46,7 @@
   $('#method-score-date').textContent = dateLabel(data.meta?.score_date || '2026-10-01');
   const isSynthetic = data.meta?.synthetic === true;
   $('#footer-data').textContent = `${isSynthetic ? 'Synthetic data' : 'Imported data'} · ${count(data.meta?.customer_count || customers.length)} signups · ${count(data.meta?.order_count || 0)} orders · ${data.meta?.currency || 'USD'}`;
-  $('.sidebar-footer small').textContent = `Local analytics · ${data.meta?.currency || 'USD'}`;
+  $('.sidebar-footer small').textContent = `Retention analytics · ${data.meta?.currency || 'USD'}`;
   $('.demo-badge').textContent = isSynthetic ? 'DEMO' : 'IMPORTED';
   if (!isSynthetic) {
     $('.sidebar-note strong').textContent = 'Imported customer data';
@@ -100,13 +100,13 @@
       const arc = length ? `<circle cx="92" cy="80" r="60" fill="none" stroke="${colors[part.name]}" stroke-width="15" stroke-dasharray="${Math.max(0, length - 3)} ${circumference - Math.max(0, length - 3)}" stroke-dashoffset="${-offset}" transform="rotate(-90 92 80)"/>` : '';
       offset += length; return arc;
     }).join('');
-    $('#risk-chart').innerHTML = `<div class="risk-donut-wrap"><svg viewBox="0 0 184 164" role="img" aria-label="Customer risk distribution: ${parts.map(p => `${p.name}, ${p.value}`).join('; ')}"><circle cx="92" cy="80" r="60" fill="none" stroke="#f1f4ed" stroke-width="15"/>${arcs}</svg><div class="donut-center"><strong>${pct(average(rows, 'churn_probability'), 1)}</strong><span>average churn risk</span></div></div><div class="risk-rows">${parts.map(p => `<div class="risk-row"><i style="background:${colors[p.name]}" aria-hidden="true"></i><span>${p.name} risk</span><strong>${count(p.value)}</strong><small>${pct(rows.length ? p.value / rows.length : 0)}</small></div>`).join('')}</div>`;
+    $('#risk-chart').innerHTML = `<div class="risk-donut-wrap"><svg viewBox="0 0 184 164" role="img" aria-label="Customer risk distribution: ${parts.map(p => `${p.name}, ${p.value}`).join('; ')}"><circle cx="92" cy="80" r="60" fill="none" stroke="#f0f2f6" stroke-width="15"/>${arcs}</svg><div class="donut-center"><strong>${pct(average(rows, 'churn_probability'), 1)}</strong><span>average churn risk</span></div></div><div class="risk-rows">${parts.map(p => `<div class="risk-row"><i style="background:${colors[p.name]}" aria-hidden="true"></i><span>${p.name} risk</span><strong>${count(p.value)}</strong><small>${pct(rows.length ? p.value / rows.length : 0)}</small></div>`).join('')}</div>`;
   }
   function renderScenario(rows = scopedCustomers()) {
     const recovery = numeric($('#recovery-slider').value) / 100;
     $('#scenario-value').textContent = money(sum(rows, 'revenue_at_risk') * recovery);
     $('#recovery-label').textContent = pct(recovery);
-    $('#recovery-slider').style.background = `linear-gradient(to right,#699b6d ${recovery * 200}%,#e0e7d8 ${recovery * 200}%)`;
+    $('#recovery-slider').style.background = `linear-gradient(to right,#00b386 ${recovery * 200}%,#e7edf0 ${recovery * 200}%)`;
     $('#recovery-slider').setAttribute('aria-valuetext', `${pct(recovery)} assumed recovery, ${money(sum(rows, 'revenue_at_risk') * recovery)} illustrative retained exposure`);
   }
   function renderSales() {
@@ -135,13 +135,13 @@
     const upperPoints = forecast.map((r, index) => ({ index: actual.length + index, value: numeric(r.upper) || numeric(r.forecast) }));
     const lowerPoints = forecast.map((r, index) => ({ index: actual.length + index, value: numeric(r.lower) })).reverse();
     const band = upperPoints.length ? `${line(upperPoints)} ${lowerPoints.map(p => `L${x(p.index)},${y(p.value)}`).join(' ')} Z` : '';
-    const grid = Array.from({ length: 5 }, (_, i) => { const v = maxY * i / 4; return `<line x1="${margin.left}" y1="${y(v)}" x2="${w - margin.right}" y2="${y(v)}" stroke="#e9eee4" stroke-dasharray="3 4"/><text x="${margin.left - 12}" y="${y(v) + 3}" text-anchor="end" fill="#9aaa8e" font-size="9">${esc(money(v, true))}</text>`; }).join('');
+    const grid = Array.from({ length: 5 }, (_, i) => { const v = maxY * i / 4; return `<line x1="${margin.left}" y1="${y(v)}" x2="${w - margin.right}" y2="${y(v)}" stroke="#edf0f5" stroke-dasharray="3 4"/><text x="${margin.left - 12}" y="${y(v) + 3}" text-anchor="end" fill="#8b93a6" font-size="9">${esc(money(v, true))}</text>`; }).join('');
     const ticks = [...new Set(Array.from({ length: Math.min(7, combined.length) }, (_, i) => Math.round(i * (combined.length - 1) / Math.max(1, Math.min(7, combined.length) - 1))))];
-    const tickLabels = ticks.map(i => `<text x="${x(i)}" y="${h - 14}" text-anchor="middle" fill="#9aaa8e" font-size="9">${esc(monthLabel(combined[i].month))}</text>`).join('');
+    const tickLabels = ticks.map(i => `<text x="${x(i)}" y="${h - 14}" text-anchor="middle" fill="#8b93a6" font-size="9">${esc(monthLabel(combined[i].month))}</text>`).join('');
     const forecastStart = actual.length && forecast.length ? (x(actual.length - 1) + x(actual.length)) / 2 : x(0);
-    const boundary = forecast.length ? `<rect x="${forecastStart}" y="${margin.top}" width="${w - margin.right - forecastStart}" height="${plotH}" fill="#fcfaf4"/><line x1="${forecastStart}" y1="${margin.top}" x2="${forecastStart}" y2="${y(0)}" stroke="#d9d8c5" stroke-dasharray="3 5"/><text x="${forecastStart + 9}" y="${margin.top + 10}" font-size="8" fill="#b5a985" letter-spacing="1">FORECAST</text>` : '';
+    const boundary = forecast.length ? `<rect x="${forecastStart}" y="${margin.top}" width="${w - margin.right - forecastStart}" height="${plotH}" fill="#fafaff"/><line x1="${forecastStart}" y1="${margin.top}" x2="${forecastStart}" y2="${y(0)}" stroke="#dcdff0" stroke-dasharray="3 5"/><text x="${forecastStart + 9}" y="${margin.top + 10}" font-size="8" fill="#8d94bb" letter-spacing="1">FORECAST</text>` : '';
     const hitTargets = combined.map((r, i) => `<circle cx="${x(i)}" cy="${y(r.value)}" r="7" fill="transparent" tabindex="0" data-chart-index="${i}" aria-label="${esc(`${monthLabel(r.month)} ${r.type}: ${money(r.value)}${r.type === 'Forecast' ? `; approximate interval ${money(r.lower)} to ${money(r.upper)}` : ''}`)}"><title>${esc(`${monthLabel(r.month)} · ${r.type} · ${money(r.value)}`)}</title></circle>`).join('');
-    container.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="sales-title sales-description"><title id="sales-title">Monthly sales and six-month revenue forecast</title><desc id="sales-description">Actual sales are solid teal; forecasts are dashed orange with an approximate prediction interval. Focus any month for its value.</desc><defs><linearGradient id="actual-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bad9c6" stop-opacity=".5"/><stop offset="100%" stop-color="#e7f1e3" stop-opacity=".1"/></linearGradient></defs>${boundary}${grid}${band ? `<path d="${band}" fill="#f0dfc5" opacity=".58"/>` : ''}${area ? `<path d="${area}" fill="url(#actual-fill)"/>` : ''}${actualPoints.length ? `<path d="${line(actualPoints)}" fill="none" stroke="#26816c" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round"/>` : ''}${bridge.length ? `<path d="${line(bridge)}" fill="none" stroke="#cd985b" stroke-width="2.2" stroke-dasharray="5 5" stroke-linejoin="round" stroke-linecap="round"/>` : ''}${actualPoints.length ? `<circle cx="${x(actualPoints[actualPoints.length - 1].index)}" cy="${y(actualPoints[actualPoints.length - 1].value)}" r="3.5" fill="#26816c" stroke="#fff" stroke-width="2"/>` : ''}${tickLabels}${hitTargets}</svg><div class="chart-tooltip" role="status" hidden></div>`;
+    container.innerHTML = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-labelledby="sales-title sales-description"><title id="sales-title">Monthly sales and six-month revenue forecast</title><desc id="sales-description">Actual sales are solid green; forecasts are dashed indigo with an approximate prediction interval. Focus any month for its value.</desc><defs><linearGradient id="actual-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8ce5c5" stop-opacity=".5"/><stop offset="100%" stop-color="#e8faf3" stop-opacity=".1"/></linearGradient></defs>${boundary}${grid}${band ? `<path d="${band}" fill="#dbe0ff" opacity=".58"/>` : ''}${area ? `<path d="${area}" fill="url(#actual-fill)"/>` : ''}${actualPoints.length ? `<path d="${line(actualPoints)}" fill="none" stroke="#00b386" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round"/>` : ''}${bridge.length ? `<path d="${line(bridge)}" fill="none" stroke="#5367ff" stroke-width="2.2" stroke-dasharray="5 5" stroke-linejoin="round" stroke-linecap="round"/>` : ''}${actualPoints.length ? `<circle cx="${x(actualPoints[actualPoints.length - 1].index)}" cy="${y(actualPoints[actualPoints.length - 1].value)}" r="3.5" fill="#00b386" stroke="#fff" stroke-width="2"/>` : ''}${tickLabels}${hitTargets}</svg><div class="chart-tooltip" role="status" hidden></div>`;
     const tooltip = $('.chart-tooltip', container);
     $$('[data-chart-index]', container).forEach(point => {
       const show = () => { const i = Number(point.dataset.chartIndex), r = combined[i]; tooltip.innerHTML = `${esc(monthLabel(r.month))} · ${r.type}<strong>${money(r.value)}</strong>${r.type === 'Forecast' ? `<small>Interval ${money(r.lower)} – ${money(r.upper)}</small>` : ''}`; tooltip.style.left = `${Math.max(15, Math.min(85, x(i) / w * 100))}%`; tooltip.style.top = `${y(r.value) / h * 100}%`; tooltip.hidden = false; };
@@ -181,8 +181,8 @@
         const record = index.get(`${group}:${month}`);
         if (!record) return '<td class="unobserved" aria-label="Not observed" title="Not observed"></td>';
         const rate = Math.max(0, Math.min(1, numeric(record.retention_rate)));
-        const lightness = 97 - rate * 67, saturation = 20 + rate * 17;
-        return `<td style="background:hsl(151 ${saturation}% ${lightness}%);color:${rate > .56 ? '#fff' : '#62815f'}" title="${esc(`${monthLabel(group)}, month ${month}: ${count(record.retained_customers)} of ${count(record.cohort_size)} customers (${pct(rate, 1)})`)}">${pct(rate)}</td>`;
+        const lightness = 97 - rate * 70, saturation = 55 + rate * 15;
+        return `<td style="background:hsl(158 ${saturation}% ${lightness}%);color:${rate > .94 ? '#fff' : '#082219'}" title="${esc(`${monthLabel(group)}, month ${month}: ${count(record.retained_customers)} of ${count(record.cohort_size)} customers (${pct(rate, 1)})`)}">${pct(rate)}</td>`;
       }).join('');
       return `<tr><th scope="row">${esc(monthLabel(group))}</th><td class="cohort-size">${count(any?.cohort_size)}</td>${row}</tr>`;
     }).join('');
@@ -199,7 +199,7 @@
     const importance = [...(data.feature_importance || [])].sort((a, b) => numeric(b.importance) - numeric(a.importance)).slice(0, 10);
     const largest = Math.max(.000001, ...importance.map(r => Math.abs(numeric(r.importance))));
     const friendly = { recency_days: 'Days since last purchase', order_trend: 'Recent order trend', orders_30d: 'Orders · last 30 days', orders_90d: 'Orders · last 90 days', orders_180d: 'Orders · last 180 days', revenue_90d: 'Revenue · last 90 days', revenue_180d: 'Revenue · last 180 days', avg_order_value: 'Average order value', avg_gap_days: 'Average purchase gap', gap_std_days: 'Purchase gap variability', tenure_days: 'Customer tenure', lifetime_orders: 'Lifetime orders', lifetime_revenue: 'Lifetime revenue', days_to_first_order: 'Days to first order', acquisition_channel: 'Acquisition channel', country: 'Country' };
-    $('#importance-chart').innerHTML = importance.length ? `<div class="importance-rows">${importance.map(r => `<div class="importance-row"><span class="importance-name">${esc(friendly[r.feature] || titleCase(r.feature))}</span><div class="importance-track" role="img" aria-label="${esc(r.feature)} importance ${numeric(r.importance).toFixed(4)}"><div class="importance-bar" style="width:${Math.abs(numeric(r.importance)) / largest * 100}%;${numeric(r.importance) < 0 ? 'background:#c8b080;' : ''}"></div></div><span class="importance-value">${numeric(r.importance).toFixed(3)}</span></div>`).join('')}</div>` : '<p class="empty-state">Feature importance is not available.</p>';
+    $('#importance-chart').innerHTML = importance.length ? `<div class="importance-rows">${importance.map(r => `<div class="importance-row"><span class="importance-name">${esc(friendly[r.feature] || titleCase(r.feature))}</span><div class="importance-track" role="img" aria-label="${esc(r.feature)} importance ${numeric(r.importance).toFixed(4)}"><div class="importance-bar" style="width:${Math.abs(numeric(r.importance)) / largest * 100}%;${numeric(r.importance) < 0 ? 'background:#d8a33d;' : ''}"></div></div><span class="importance-value">${numeric(r.importance).toFixed(3)}</span></div>`).join('')}</div>` : '<p class="empty-state">Feature importance is not available.</p>';
     const high = metrics.risk_thresholds?.high, medium = metrics.risk_thresholds?.medium;
     if (high !== undefined && medium !== undefined) $('#risk-definition').textContent = `High: probability ≥ ${pct(high, 1)}. Medium: ${pct(medium, 1)} to below ${pct(high, 1)}. Low: below ${pct(medium, 1)}. The High threshold maximizes validation F2; Medium is half that threshold.`;
     const selected = data.forecast_metrics?.selected_model;

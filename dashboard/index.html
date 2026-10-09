@@ -3,25 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#11675d">
+  <meta name="theme-color" content="#00b386">
   <title>Continuum · Customer Retention Intelligence</title>
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="theme.css?v=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <script src="data.js?v=301b6d4753b5" defer></script>
-  <script src="app.js?v=2" defer></script>
+  <script src="app.js?v=3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
   <aside class="sidebar" aria-label="Application navigation">
-    <a class="brand" href="#overview" aria-label="Continuum overview"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>continuum<span class="brand-caption">CUSTOMER INTELLIGENCE</span></span></a>
+    <a class="brand" href="#overview" aria-label="Continuum overview"><span class="brand-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="9" fill="#00B386"/>
+  <path d="M7 23L12 17L17 20L25 13" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23 6V12M20 9H26" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+</svg></span><span>continuum<span class="brand-caption">CUSTOMER INTELLIGENCE</span></span></a>
     <p class="nav-label">WORKSPACE</p>
     <nav class="navigation" aria-label="Dashboard views">
-      <button class="nav-item active" data-view="overview" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Overview</button>
+      <button class="nav-item active" data-view="overview" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19l5-6 4 3 7-7M18 3v6M15 6h6M3 22h18"/></svg>Overview</button>
       <button class="nav-item" data-view="customers"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M17 14a5 5 0 0 1 4 4v2"/></svg>Customer signals<span id="nav-risk-count" class="nav-count">—</span></button>
       <button class="nav-item" data-view="retention"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16M8 3v18M15 3v18"/></svg>Cohort retention</button>
       <button class="nav-item" data-view="methods"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18l5-6 5 3 8-10M17 5h4v4M3 21h18"/></svg>Model &amp; methods</button>
     </nav>
     <div class="sidebar-note"><span class="live-dot"></span><strong>Synthetic research project</strong><p>A reproducible demonstration of customer lifecycle analytics.</p><span class="sidebar-note-tag">SQL · PANDAS · SCIKIT-LEARN</span></div>
-    <div class="sidebar-footer"><span class="workspace-icon" aria-hidden="true">C</span><div><strong>E-commerce workspace</strong><small>Local analytics · USD</small></div></div>
+    <div class="sidebar-footer"><span class="workspace-icon" aria-hidden="true">C</span><div><strong>E-commerce workspace</strong><small>Retention analytics · USD</small></div></div>
   </aside>
   <main id="main-content" tabindex="-1">
     <header class="page-header"><div><p class="eyebrow">RETENTION INTELLIGENCE <span>/</span> <span id="view-crumb">OVERVIEW</span></p><h1 id="view-title">Know who stays.<br class="mobile-break"> Understand who may leave.</h1><p id="view-description" class="page-description">Turn customer behavior into a more focused retention strategy.</p></div><div class="snapshot"><span class="snapshot-icon" aria-hidden="true">◷</span><div><span>Scoring snapshot</span><strong id="score-date">01 Oct 2026</strong></div><span class="demo-badge">DEMO</span></div></header>
