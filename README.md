@@ -2,6 +2,8 @@
 
 A complete analytics project connecting SQL customer lifecycle analysis, Pandas time-series features, Scikit-learn purchase-inactivity scoring, sales forecasting, and an interactive Tableau dashboard.
 
+**[Open the live dashboard](https://rajshekharpro-retention.raj-6d6f.chatgpt.site)** · **[GitHub repository](https://github.com/rajshekharpro/ecommerce-retention)**
+
 ![Customer retention dashboard](docs/dashboard-preview.jpg)
 
 **All bundled data is synthetic.** It represents a fictional store, uses USD, and covers January 2023 through September 2026. Model scores and scenario estimates demonstrate a workflow; they do not establish real customer behavior or proven revenue savings.
