@@ -2,7 +2,7 @@
 
 A complete analytics project connecting SQL customer lifecycle analysis, Pandas time-series features, Scikit-learn purchase-inactivity scoring, sales forecasting, and an interactive Tableau dashboard.
 
-**[Open the live dashboard](https://rajshekharpro-retention.raj-6d6f.chatgpt.site)** · **[GitHub repository](https://github.com/rajshekharpro/ecommerce-retention)**
+**[Open the live dashboard](https://rajshekharpro.github.io/ecommerce-retention/)** · **[GitHub repository](https://github.com/rajshekharpro/ecommerce-retention)**
 
 ![Customer retention dashboard](docs/dashboard-preview.jpg)
 
@@ -18,6 +18,8 @@ A complete analytics project connecting SQL customer lifecycle analysis, Pandas 
 The bundled run achieves test ROC-AUC **0.824**, average precision **0.598**, and **90.6% recall** at **38.8% precision**. The chosen six-month sales model has rolling-backtest WAPE **4.0%**. These are synthetic-data metrics; the forecast comparison shares its selection folds and is not an independent test. See `docs/validation.md` for completed checks and the native Tableau limitation.
 
 On Windows, `./run_project.ps1` opens the browser dashboard. `./run_project.ps1 -Rebuild` regenerates data and analytics first.
+
+The public dashboard is hosted on GitHub Pages. The workflow in `.github/workflows/pages.yml` publishes `dashboard/` when its files change on `main`, and can also be run manually from the repository's Actions tab.
 
 ## Reproduce the analysis
 
